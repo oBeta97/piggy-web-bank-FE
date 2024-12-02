@@ -1,8 +1,6 @@
-
-html{
-    overflow: hidden;
+html, body {
+    overflow: hidden !important;
 }
-
 
 .arc{
     border-radius: 50%;
@@ -10,7 +8,6 @@ html{
     border-right: none;
     border-left: none;
     position: absolute;
-    z-index: -1;
 }
 
 .main-background-arc {
