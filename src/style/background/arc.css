@@ -1,0 +1,81 @@
+:root {
+    --primary-color: #244C87;
+    --secondary-color: #bac5d47c;
+    --highlight-color: #b9cdeb;
+    --border-color: #284f8a;
+}
+
+
+.arc,
+.dot {
+    border-radius: 50%;
+}
+
+.arc {
+    position: fixed;
+}
+
+.main-background-arc,
+.third-background-arc {
+    width: 160%;
+    left: -30%;
+    bottom: -50%;
+}
+
+.main-background-arc {
+    height: 90%;
+    border-top: 7px solid;
+}
+
+.secondary-background-arc,
+.dot {
+    position: absolute;
+}
+
+.secondary-background-arc,
+.third-background-arc {
+    height: 100%;
+    border-top: 1px solid;
+}
+
+.secondary-background-arc {
+    width: 100%;
+    bottom: -10%;
+}
+
+.arc-main-color {
+    box-shadow: inset 0 0 20px 12px var(--primary-color);
+    /* internal glow */
+    border-color: var(--border-color);
+}
+
+.secondary-arc-main-color {
+    border-color: var(--secondary-color);
+}
+
+
+@media screen and (min-width: 576px) {
+
+    .main-background-arc {
+        width: 100%;
+        border: 7px solid;
+        left: -5px;
+    }
+
+    .third-background-arc {
+        width: 106%;
+        border: 1px solid;
+        left: -3%;
+    }
+
+    .arc-main-color {
+        box-shadow: inset 0 0 20px 12px #244C87;
+        /* internal glow */
+        border-color: var(--border-color);
+    }
+
+    .secondary-arc-main-color {
+        border-color: var(--secondary-color);
+    }
+
+}
