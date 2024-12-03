@@ -1,0 +1,59 @@
+
+.dot {
+    width: 3px;
+    height: 3px;
+    background-color: var(--secondary-color);
+    box-shadow: 0 0 5px 3px var(--secondary-color);
+    animation: pulse 2.5s infinite ease-in-out;
+}
+
+.dot-center {
+    top: -0.3%;
+    left: 48%;
+}
+
+.dot-left {
+    top: 6%;
+    left: 25.5%;
+}
+
+.dot-right {
+    top: 6.3%;
+    left: 74.6%;
+}
+
+.third-background-arc .dot-right {
+    top: 2%;
+    left: 64%;
+}
+
+
+[dot-index="1"] {
+    animation-delay: 0s;
+}
+
+[dot-index="2"] {
+    animation-delay: 1.2s;
+}
+
+[dot-index="3"] {
+    animation-delay: 2.7s;
+}
+
+[dot-index="4"] {
+    animation-delay: 3.9s;
+}
+
+@keyframes pulse {
+
+    0%,
+    80%,
+    100% {
+        box-shadow: 0 0 5px 3px var(--secondary-color);
+    }
+
+    40% {
+        box-shadow: 0 0 10px 3px var(--highlight-color);
+
+    }
+}

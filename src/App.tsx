@@ -1,13 +1,12 @@
 import './App.css'
 import { BaseBackground } from './components/BaseBackground'
-import TestComponent from './components/test'
-import './style/arc.css'
+import MyMainPage from './components/MyMainPage'
 
 function App() {
 
   return (
 
-    <BaseBackground ChildComponent={<TestComponent />}></BaseBackground>
+    <BaseBackground ChildComponent={<MyMainPage />}></BaseBackground>
 
   )
 }
