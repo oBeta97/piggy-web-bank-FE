@@ -9,7 +9,7 @@
 
 .main-background-arc {
     width: 160%;
-    height: 90vh;
+    height: 90%;
     border: 7px solid;
     left: -30%;
     bottom: -50%;
@@ -18,14 +18,14 @@
 .secondary-background-arc{
     position: absolute;
     width: 100%;
-    height: 90vh;
+    height: 100%;
     border: 1px solid;
     bottom: -10%;
 }
 
 .third-background-arc{
     width: 160%;
-    height: 100vh;
+    height: 100%;
     border: 1px solid;
     left: -30%;
     bottom: -50%;
