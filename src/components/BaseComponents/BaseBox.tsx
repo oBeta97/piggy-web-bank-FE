@@ -21,6 +21,7 @@ const BaseBox = (props: IContentBoxProps) => {
                     md: '60%',
                     lg: '50%'                    
                 },
+                maxWidth: '650px',
                 background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))',
                 backdropFilter: 'blur(10px)',
                 boxShadow: 'inset 0 0 10px rgba(0, 0, 0, 0.2)'

@@ -1,8 +1,10 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, Stack, TextField } from "@mui/material";
 import { useState } from "react";
 import { EMAIL_REGEX, PASSWORD_REGEX } from "../../modules/Regex";
 import { useDispatch } from "react-redux";
 import { setBackgroundError } from "../../redux/action";
+import { signin } from "../../modules/fetches/LogSignin";
+import { IsigninObj } from "../../interfaces/IsigninObj";
 
 
 const SigninForm = () => {
@@ -19,29 +21,29 @@ const SigninForm = () => {
 
     const dispatch = useDispatch();
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
- 
+
         setEmailError(false);
         setPasswordError(false);
         dispatch(setBackgroundError(false));
 
 
-        if(!email.match(EMAIL_REGEX)){
+        if (!email.match(EMAIL_REGEX)) {
             console.error("Email not valid!")
             setEmailError(true);
             dispatch(setBackgroundError(true));
             return;
         }
 
-        if(password !== confirmPassword){
+        if (password !== confirmPassword) {
             console.error("Wrong confirm password!")
             setPasswordError(true);
             dispatch(setBackgroundError(true));
             return;
         }
 
-        if(!password.match(PASSWORD_REGEX)){
+        if (!password.match(PASSWORD_REGEX)) {
             console.error("Password not secure enough!")
             setPasswordError(true);
             dispatch(setBackgroundError(true));
@@ -57,22 +59,36 @@ const SigninForm = () => {
             password,
             confirmPassword
         });
+
+
+        const signInObj: IsigninObj = {
+            name: name,
+            surname: surname,
+            username: username,
+            email: email,
+            password: password
+        }
+
+
+        console.log(await signin(signInObj));
+
     };
 
 
 
     return (
-        <Box
-            component="form"
-            sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: '1.3em',
-                my: '1.5em'
-            }}
-            onSubmit={handleSubmit}
-        >
 
+        <Stack 
+        component="form" 
+        spacing={2} 
+        onSubmit={handleSubmit}
+        sx={{
+            py:{
+                xs:'2em',
+                md:'5em'
+            }
+        }}
+        >
             <TextField
                 id="name"
                 label="Name"
@@ -141,8 +157,7 @@ const SigninForm = () => {
                 <Button variant="outlined">Cancel</Button>
                 <Button type="submit" color="secondary" variant="contained">Signin</Button>
             </Box>
-
-        </Box>
+        </Stack>
     );
 }
 
