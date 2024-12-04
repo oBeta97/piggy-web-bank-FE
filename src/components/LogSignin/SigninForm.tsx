@@ -1,6 +1,8 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { EMAIL_REGEX, PASSWORD_REGEX } from "../../modules/Regex";
+import { useDispatch } from "react-redux";
+import { setBackgroundError } from "../../redux/action";
 
 
 const SigninForm = () => {
@@ -15,26 +17,35 @@ const SigninForm = () => {
     const [emailError, setEmailError] = useState<boolean>(false);
     const [passwordError, setPasswordError] = useState<boolean>(false);
 
+    const dispatch = useDispatch();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
+ 
         setEmailError(false);
         setPasswordError(false);
+        dispatch(setBackgroundError(false));
+
 
         if(!email.match(EMAIL_REGEX)){
             console.error("Email not valid!")
             setEmailError(true);
+            dispatch(setBackgroundError(true));
+            return;
         }
 
         if(password !== confirmPassword){
             console.error("Wrong confirm password!")
             setPasswordError(true);
+            dispatch(setBackgroundError(true));
+            return;
         }
 
         if(!password.match(PASSWORD_REGEX)){
             console.error("Password not secure enough!")
             setPasswordError(true);
+            dispatch(setBackgroundError(true));
+            return;
         }
 
 
