@@ -1,6 +1,6 @@
 import { Box, Button, Menu, MenuItem, Typography } from "@mui/material";
 import { useState } from "react";
-import { MENU_COLOR, SECONDARY_COLOR, WHITE_COLOR } from "../../modules/colors";
+import { MENU_COLOR, SECONDARY_COLOR, WHITE_COLOR } from "../../modules/Colors";
 import { Link, useLocation } from "react-router-dom";
 
 const NavList = () => {
