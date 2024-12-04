@@ -1,6 +1,6 @@
 
-import '../style/background/arc.css'
-import '../style/background/dot.css'
+import '../../style/background/arc.css'
+import '../../style/background/dot.css'
 
 
 interface prop {

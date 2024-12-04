@@ -1,9 +1,11 @@
+import { getJwtToken } from '../Token'
 
-export const putPostFetch = async (URL: string, method: string, json: string) => {
+
+export const putPostFetch = async (URL: string, method: "PUT" | "POST", json: string) => {
 
     try {
 
-        const myToken: string | null = localStorage.getItem("PWB_Token");
+        const myToken: string | null = getJwtToken();
 
         if (myToken === null)
             throw new Error("Token unavailable!");
