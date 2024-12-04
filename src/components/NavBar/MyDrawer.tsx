@@ -1,5 +1,5 @@
 import { Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
-import { MENU_COLOR, SECONDARY_COLOR, WHITE_COLOR } from "../../modules/colors";
+import { MENU_COLOR, SECONDARY_COLOR, WHITE_COLOR } from "../../modules/Colors";
 import { Link, useLocation } from "react-router-dom";
 
 interface myDrawerProps {
