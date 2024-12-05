@@ -57,7 +57,7 @@
 .arc-main-color-error {
     box-shadow: inset 0 0 20px 12px var(--error-color);
     /* internal glow */
-    border-color: var(--border-error-color);
+    border-color: var(--border-error-color) !important; /* dunno why i have to use important! :D */
 }
 
 .secondary-arc-main-color {

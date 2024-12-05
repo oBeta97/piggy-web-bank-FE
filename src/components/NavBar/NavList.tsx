@@ -1,7 +1,8 @@
 import { Box, Button, Menu, MenuItem, Typography } from "@mui/material";
 import { useState } from "react";
-import { MENU_COLOR, SECONDARY_COLOR, WHITE_COLOR } from "../../modules/colors";
+import { MENU_COLOR, SECONDARY_COLOR, WHITE_COLOR } from "../../modules/Colors";
 import { Link, useLocation } from "react-router-dom";
+import { getJwtToken } from "../../modules/Token";
 
 const NavList = () => {
 
@@ -36,38 +37,43 @@ const NavList = () => {
     return (
         <>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' }, justifyContent: 'center' }}>
-                <Link to="/">
-                    <Button sx={{
-                        mx: '1em',
-                        color: location.pathname === '/' ? SECONDARY_COLOR : WHITE_COLOR,
-                        fontWeight: location.pathname === '/' ? 'bold' : '',
-                        display: 'block',
-                        textDecoration: 'none'
-                    }}>
-                        Home
-                    </Button>
-                </Link>
-                <Button
-                    onClick={(e) => setAnchorMA(e.currentTarget)}
-                    sx={{
-                        mx: '1em',
-                        color: isManageAccount() ? SECONDARY_COLOR : WHITE_COLOR,
-                        fontWeight: isManageAccount() ? 'bold' : '',
-                        display: 'block'
-                    }}
-                >
-                    Manage Account
-                </Button>
-                <Link to="/statistics">
-                    <Button sx={{
-                        mx: '1em',
-                        color: location.pathname === '/statistics' ? SECONDARY_COLOR : WHITE_COLOR,
-                        fontWeight: location.pathname === '/statistics' ? 'bold' : '',
-                        display: 'block'
-                    }}>
-                        Statistics
-                    </Button>
-                </Link>
+                {
+                    getJwtToken() &&
+                    <>
+                        <Link to="/">
+                            <Button sx={{
+                                mx: '1em',
+                                color: location.pathname === '/' ? SECONDARY_COLOR : WHITE_COLOR,
+                                fontWeight: location.pathname === '/' ? 'bold' : '',
+                                display: 'block',
+                                textDecoration: 'none'
+                            }}>
+                                Home
+                            </Button>
+                        </Link>
+                        <Button
+                            onClick={(e) => setAnchorMA(e.currentTarget)}
+                            sx={{
+                                mx: '1em',
+                                color: isManageAccount() ? SECONDARY_COLOR : WHITE_COLOR,
+                                fontWeight: isManageAccount() ? 'bold' : '',
+                                display: 'block'
+                            }}
+                        >
+                            Manage Account
+                        </Button>
+                        <Link to="/statistics">
+                            <Button sx={{
+                                mx: '1em',
+                                color: location.pathname === '/statistics' ? SECONDARY_COLOR : WHITE_COLOR,
+                                fontWeight: location.pathname === '/statistics' ? 'bold' : '',
+                                display: 'block'
+                            }}>
+                                Statistics
+                            </Button>
+                        </Link>
+                    </>
+                }
             </Box>
 
             <Menu
@@ -95,9 +101,9 @@ const NavList = () => {
                     ManageAccountSub.map(sub => {
 
                         const path = "/" + sub.
-                                replace(" ", "-").
-                                replace("/", "-").
-                                toLowerCase();
+                            replace(" ", "-").
+                            replace("/", "-").
+                            toLowerCase();
 
                         return (
                             <MenuItem

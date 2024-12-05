@@ -7,9 +7,13 @@ import Burger from './Burger';
 import logo from '../../../public/icon.png'
 import { Box } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { getJwtToken } from '../../modules/Token';
+import LogSigninButtons from './LogSigninButtons';
 
 
 function MyNavBar() {
+
+    const myToken: string | null = getJwtToken();
 
     return (
         <AppBar position="fixed" sx={{ backgroundColor: '#ffffff00', boxShadow: 'none', pt: '0.5em' }}>
@@ -31,7 +35,12 @@ function MyNavBar() {
                         </Link>
                     </Box>
                     <NavList />
-                    <UserIcon />
+                    {
+                        myToken != null ?
+                            <UserIcon />
+                            :
+                            <LogSigninButtons />
+                    }
                     <Burger />
                 </Toolbar>
             </Container>

@@ -1,6 +1,7 @@
 import { Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
-import { MENU_COLOR, SECONDARY_COLOR, WHITE_COLOR } from "../../modules/colors";
+import { MENU_COLOR, SECONDARY_COLOR, WHITE_COLOR } from "../../modules/Colors";
 import { Link, useLocation } from "react-router-dom";
+import { getJwtToken } from "../../modules/Token";
 
 interface myDrawerProps {
     openDrawer: boolean;
@@ -20,9 +21,16 @@ const MyDrawer = (props: myDrawerProps) => {
     ]
 
     const bottomList = [
-        'Settings',
-        'LogOut'
+        'Settings'
     ]
+
+    if(getJwtToken())
+        bottomList.push('Logout');
+    else{
+        bottomList.push('Login');
+        bottomList.push('Signin');
+    }
+
 
     const location = useLocation();
 
@@ -50,7 +58,7 @@ const MyDrawer = (props: myDrawerProps) => {
                             toLowerCase();
 
                         return (
-                            <ListItem key={text} disablePadding>
+                            <ListItem key={text} disablePadding >
                                 <ListItemButton>
                                     <Link to={path}>
                                         <ListItemText
