@@ -8,7 +8,11 @@ function App() {
 
   return (
     <ThemeProvider theme={myTheme}>
-      <BaseBackground ChildComponent={<MyMainPage />}></BaseBackground>
+      <BaseBackground
+        ChildComponent={
+          <MyMainPage />
+        }
+      />
     </ThemeProvider>
 
   )

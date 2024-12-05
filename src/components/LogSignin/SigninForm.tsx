@@ -1,10 +1,13 @@
-import { Box, Button, Stack, TextField } from "@mui/material";
+import { Button, Stack, TextField } from "@mui/material";
 import { useState } from "react";
 import { EMAIL_REGEX, PASSWORD_REGEX } from "../../modules/Regex";
 import { useDispatch } from "react-redux";
-import { setBackgroundError } from "../../redux/action";
 import { signin } from "../../modules/fetches/LogSignin";
 import { IsigninObj } from "../../interfaces/IsigninObj";
+import { IfetchError } from "../../interfaces/IfetchError";
+import { isFetchError } from "../../modules/TypeGuard";
+import { dispatchBackgroundChange } from "../../modules/dispatches/BackgroundChange";
+import { useNavigate } from "react-router-dom";
 
 
 const SigninForm = () => {
@@ -18,48 +21,31 @@ const SigninForm = () => {
 
     const [emailError, setEmailError] = useState<boolean>(false);
     const [passwordError, setPasswordError] = useState<boolean>(false);
+    const [usernameError, setUsernameError] = useState<boolean>(false);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const checkFormValues = () => {
+        if (!email.match(EMAIL_REGEX))
+            dispatchBackgroundChange(dispatch, true, "Email not valid!", setEmailError);
+
+        if (password !== confirmPassword)
+            dispatchBackgroundChange(dispatch, true, "Wrong confirm password!", setPasswordError);
+
+        if (!password.match(PASSWORD_REGEX))
+            dispatchBackgroundChange(dispatch, true, "Password not secure enough!", setPasswordError);
+
+    }
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         setEmailError(false);
         setPasswordError(false);
-        dispatch(setBackgroundError(false));
+        setUsernameError(false);
 
-
-        if (!email.match(EMAIL_REGEX)) {
-            console.error("Email not valid!")
-            setEmailError(true);
-            dispatch(setBackgroundError(true));
-            return;
-        }
-
-        if (password !== confirmPassword) {
-            console.error("Wrong confirm password!")
-            setPasswordError(true);
-            dispatch(setBackgroundError(true));
-            return;
-        }
-
-        if (!password.match(PASSWORD_REGEX)) {
-            console.error("Password not secure enough!")
-            setPasswordError(true);
-            dispatch(setBackgroundError(true));
-            return;
-        }
-
-
-        console.log({
-            name,
-            surname,
-            username,
-            email,
-            password,
-            confirmPassword
-        });
-
+        checkFormValues();
 
         const signInObj: IsigninObj = {
             name: name,
@@ -69,25 +55,45 @@ const SigninForm = () => {
             password: password
         }
 
+        const res: IfetchError | IsigninObj = await signin(signInObj);
 
-        console.log(await signin(signInObj));
+        if (isFetchError(res)) {
+            switch (true) {
+                case res.message.toLowerCase().includes('email'):
+                    dispatchBackgroundChange(dispatch, true, res.message, setEmailError);
+                    break;
+                case res.message.toLowerCase().includes('password'):
+                    dispatchBackgroundChange(dispatch, true, res.message, setPasswordError);
+                    break;
+                case res.message.toLowerCase().includes('username'):
+                    dispatchBackgroundChange(dispatch, true, res.message, setUsernameError);
+                    break;
+                default:
+                    dispatchBackgroundChange(dispatch, true, "Unknown error!");
+            }
+        }
 
+        dispatchBackgroundChange(dispatch, false, 'Welcome on board!')
+
+        setInterval(() => {
+            navigate('/login')
+        }, 2500);
     };
 
 
 
     return (
 
-        <Stack 
-        component="form" 
-        spacing={2} 
-        onSubmit={handleSubmit}
-        sx={{
-            py:{
-                xs:'2em',
-                md:'5em'
-            }
-        }}
+        <Stack
+            component="form"
+            spacing={2}
+            onSubmit={handleSubmit}
+            sx={{
+                padding: {
+                    xs: '2em',
+                    md: '5em'
+                }
+            }}
         >
             <TextField
                 id="name"
@@ -112,6 +118,7 @@ const SigninForm = () => {
                 focused
                 color="secondary"
                 value={username}
+                error={usernameError}
                 onChange={(e) => setUsername(e.target.value)}
             />
             <TextField
@@ -148,15 +155,8 @@ const SigninForm = () => {
                 onChange={(e) => setConfirmPassword(e.target.value)}
             />
 
-            <Box
-                sx={{
-                    display: "flex",
-                    justifyContent: 'space-between'
-                }}
-            >
-                <Button variant="outlined">Cancel</Button>
-                <Button type="submit" color="secondary" variant="contained">Signin</Button>
-            </Box>
+            <Button type="submit" color="secondary" variant="contained">Signin</Button>
+
         </Stack>
     );
 }

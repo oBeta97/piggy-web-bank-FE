@@ -1,12 +1,15 @@
 import { reduxAction } from "../../interfaces/IreduxAction"
-import { ADD_BACKGROUND_ERROR } from "../action"
+import { ADD_BACKGROUND_ERROR, IbackgroundError } from "../action"
 
 
 
-const initialState: boolean = false;
+const initialState: IbackgroundError = {
+    isError: false,
+    text: ""
+};
 
 
-export const backgroundErrorReducer = (state: boolean = initialState, action: reduxAction<boolean>) => {
+export const backgroundErrorReducer = (state: IbackgroundError = initialState, action: reduxAction<IbackgroundError>) => {
 
     switch (action.type) {
         case ADD_BACKGROUND_ERROR:

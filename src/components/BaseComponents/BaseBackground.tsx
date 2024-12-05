@@ -3,6 +3,10 @@ import { useSelector } from 'react-redux';
 import '../../style/background/arc.css'
 import '../../style/background/dot.css'
 import { Istore } from '../../redux/store'
+import { MyAlert } from './MyAlert';
+import { IbackgroundError } from '../../redux/action';
+import { useEffect, useState } from 'react';
+
 
 
 interface prop {
@@ -11,7 +15,21 @@ interface prop {
 
 export const BaseBackground = (props: prop) => {
 
-    const isError: boolean = useSelector((store: Istore) => store.backgroundError);
+    const backgroundError: IbackgroundError = useSelector((store: Istore) => store.backgroundError);
+
+    const [isError, setIsError] = useState<boolean>(false);
+
+    useEffect(()=>{
+
+        setIsError(backgroundError.isError)
+
+        setTimeout(() => {
+            setIsError(false)
+        }, 2000);
+
+    }
+    ,[backgroundError])
+
 
     return (
         <div className="background">
@@ -34,6 +52,9 @@ export const BaseBackground = (props: prop) => {
                     </div>
                 </div>
             </div>
+
+            <MyAlert />
+
         </div>
     )
 

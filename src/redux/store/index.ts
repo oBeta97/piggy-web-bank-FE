@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import { backgroundErrorReducer } from "../reducers/BackgroundError";
 import { configureStore } from "@reduxjs/toolkit";
+import { IbackgroundError } from "../action";
 
 
 const mergedReducers = combineReducers({
@@ -9,7 +10,7 @@ const mergedReducers = combineReducers({
 
 
 export interface Istore {
-    backgroundError: boolean
+    backgroundError: IbackgroundError
 }
 
 export const store = configureStore({
