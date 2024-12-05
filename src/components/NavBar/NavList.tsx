@@ -2,7 +2,8 @@ import { Box, Button, Menu, MenuItem, Typography } from "@mui/material";
 import { useState } from "react";
 import { MENU_COLOR, SECONDARY_COLOR, WHITE_COLOR } from "../../modules/Colors";
 import { Link, useLocation } from "react-router-dom";
-import { getJwtToken } from "../../modules/Token";
+import { useSelector } from "react-redux";
+import { Istore } from "../../redux/store";
 
 const NavList = () => {
 
@@ -38,7 +39,7 @@ const NavList = () => {
         <>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' }, justifyContent: 'center' }}>
                 {
-                    getJwtToken() &&
+                    useSelector((store:Istore) => store.auth.token) &&
                     <>
                         <Link to="/">
                             <Button sx={{

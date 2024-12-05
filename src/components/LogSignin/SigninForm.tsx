@@ -75,7 +75,7 @@ const SigninForm = () => {
 
         dispatchBackgroundChange(dispatch, false, 'Welcome on board!')
 
-        setInterval(() => {
+        setTimeout(() => {
             navigate('/login')
         }, 2500);
     };

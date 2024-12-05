@@ -1,7 +1,8 @@
 import { Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { MENU_COLOR, SECONDARY_COLOR, WHITE_COLOR } from "../../modules/Colors";
 import { Link, useLocation } from "react-router-dom";
-import { getJwtToken } from "../../modules/Token";
+import { useSelector } from "react-redux";
+import { Istore } from "../../redux/store";
 
 interface myDrawerProps {
     openDrawer: boolean;
@@ -24,7 +25,7 @@ const MyDrawer = (props: myDrawerProps) => {
         'Settings'
     ]
 
-    if(getJwtToken())
+    if(useSelector((store:Istore) => store.auth.token))
         bottomList.push('Logout');
     else{
         bottomList.push('Login');
