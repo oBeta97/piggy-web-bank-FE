@@ -1,4 +1,5 @@
 import { IfetchError } from "../../interfaces/IfetchError";
+import { IloginObj, IloginResult } from "../../interfaces/Ilogin";
 import { IsigninObj } from "../../interfaces/IsigninObj";
 import { putPostFetch } from "./BaseFetches";
 
@@ -17,7 +18,26 @@ export const signin = async (signinObj: IsigninObj): Promise<IfetchError | Isign
         return {
             errorCode: '400',
             message: err instanceof Error ? err.message : String(err),
-            dt: new Date().toISOString().toString() 
+            dt: new Date().toISOString().toString()
+        };
+    }
+
+}
+
+export const login = async (loginObj: IloginObj): Promise<IfetchError | IloginResult> => {
+
+    try {
+        return await putPostFetch(
+            import.meta.env.VITE_BACKEND_URL + 'auth/login',
+            "POST",
+            JSON.stringify(loginObj),
+            true
+        )
+    } catch (err) {
+        return {
+            errorCode: '400',
+            message: err instanceof Error ? err.message : String(err),
+            dt: new Date().toISOString().toString()
         };
     }
 

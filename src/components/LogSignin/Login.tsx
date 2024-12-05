@@ -1,24 +1,26 @@
 import { Typography } from "@mui/material";
 import ContentContainer from "../BaseComponents/ContentContainer";
 import BaseBox from "../BaseComponents/BaseBox";
-import SigninForm from "./SigninForm";
+import LoginForm from "./LoginForm";
 
 
-const Signin = () => {
+const Login = () => {
     return (
         <ContentContainer
             title={
                 <Typography variant="h3">
-                    SIGNIN
+                    Login
                 </Typography>
             }
             content={
-                <BaseBox content={
-                    <SigninForm />
-                } />
+                <BaseBox
+                    content={
+                        <LoginForm />
+                    }
+                />
             }
         />
     );
 }
 
-export default Signin;
+export default Login;

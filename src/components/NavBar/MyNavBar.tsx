@@ -7,13 +7,14 @@ import Burger from './Burger';
 import logo from '../../../public/icon.png'
 import { Box } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { getJwtToken } from '../../modules/Token';
 import LogSigninButtons from './LogSigninButtons';
+import { useSelector } from 'react-redux';
+import { Istore } from '../../redux/store';
 
 
 function MyNavBar() {
 
-    const myToken: string | null = getJwtToken();
+    const myToken: string | null = useSelector((state:Istore)=> state.auth.token);
 
     return (
         <AppBar position="fixed" sx={{ backgroundColor: '#ffffff00', boxShadow: 'none', pt: '0.5em' }}>
