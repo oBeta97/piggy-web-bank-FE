@@ -1,7 +1,6 @@
 import { Button, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { PASSWORD_REGEX } from "../../modules/Regex";
 import { dispatchBackgroundChange } from "../../modules/dispatches/BackgroundChange";
 import { IfetchError } from "../../interfaces/IfetchError";
 import { IloginObj, IloginResult } from "../../interfaces/Ilogin";
@@ -11,7 +10,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { setToken } from "../../redux/action/token";
 import { IdeleteResponse } from "../../interfaces/IdeleteResponse";
 import { Irole } from "../../interfaces/Irole";
-import { meRoles } from "../../modules/fetches/meDetails";
+import { meRoles, meUserDetails } from "../../modules/fetches/meDetails";
+import { setRole, setUserCharacteristic } from "../../redux/action/meDetails";
+import { checkPasswordSecurityLevel } from "../../modules/DataChecks";
+import { IuserCharacteristic } from "../../interfaces/Iuser";
 
 
 
@@ -25,7 +27,7 @@ const LoginForm = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const loginFetch = async (loginObj: IloginObj): Promise<IloginResult> =>{
+    const loginFetch = async (loginObj: IloginObj): Promise<void> =>{
         const res: IfetchError | IloginResult = await login(loginObj);
 
         if (isFetchError(res)) {
@@ -41,9 +43,35 @@ const LoginForm = () => {
             }
         }
 
-        return res as IloginResult;
+                
+        dispatch(
+            setToken((res as IloginResult).token)
+        );
     }
 
+    const roleFetch = async ():Promise<void> => {
+
+        const rolesFetchResult: IfetchError | IdeleteResponse | Irole = await meRoles();
+
+        if(isFetchError(rolesFetchResult))
+            dispatchBackgroundChange(dispatch, true, rolesFetchResult.message);
+
+        dispatch(
+            setRole(rolesFetchResult as Irole)
+        );
+
+    }
+
+    const userCharacteristicsFetch = async ():Promise<void> =>{
+        const uc = await meUserDetails();
+
+        if(isFetchError(uc))
+            dispatchBackgroundChange(dispatch, true, uc.message);
+
+        dispatch(
+            setUserCharacteristic(uc as IuserCharacteristic)
+        );
+    }
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -51,25 +79,17 @@ const LoginForm = () => {
         setUsernameError(false);
         setPasswordError(false);
 
-        if (!password.match(PASSWORD_REGEX))
-            dispatchBackgroundChange(dispatch, true, "Password not secure enough. It can't be right!", setPasswordError);
+        checkPasswordSecurityLevel(password, dispatch, setPasswordError);
 
         const loginObj: IloginObj = {
             username: username,
             password: password
         }
 
-        const loginResult: IloginResult = await loginFetch(loginObj);
         
-        dispatch(
-            setToken((loginResult as IloginResult).token)
-        );
-
-        const rolesFetchResult: IfetchError | IdeleteResponse | Irole = await meRoles();
-
-        if(isFetchError(rolesFetchResult))
-            dispatchBackgroundChange(dispatch, true, rolesFetchResult.message);
-
+        await loginFetch(loginObj);
+        await roleFetch();
+        await userCharacteristicsFetch();
 
 
         dispatchBackgroundChange(dispatch, false, `Welcome back ${username}!`)

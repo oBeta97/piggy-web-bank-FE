@@ -6,8 +6,9 @@ import storage from "redux-persist/lib/storage";
 import persistReducer from "redux-persist/es/persistReducer";
 import { authReducer, AuthState } from "../reducers/tokenReducer";
 import { persistStore } from "redux-persist";
-import { roleReducer } from "../reducers/MeDetailsReducer";
+import { roleReducer, userCharacteristicReducer } from "../reducers/MeDetailsReducer";
 import { Irole } from "../../interfaces/Irole";
+import { IuserCharacteristic } from "../../interfaces/Iuser";
 
 const authPersistConfig = {
     key: "PWB_Token",
@@ -28,14 +29,16 @@ const persistedRolerReducer = persistReducer(rolePersistConfig, roleReducer)
 const mergedReducers = combineReducers({
     backgroundError: backgroundErrorReducer,
     auth: persistedAuthReducer,
-    role: persistedRolerReducer
+    role: persistedRolerReducer,
+    userCharacteristc: userCharacteristicReducer,
 });
 
 
 export interface Istore {
     backgroundError: IbackgroundError,
     auth: AuthState,
-    role: Irole
+    role: Irole,
+    userCharacteristc: IuserCharacteristic
 }
 
 
