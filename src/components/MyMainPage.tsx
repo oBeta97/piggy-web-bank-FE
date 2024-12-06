@@ -4,6 +4,7 @@ import Signin from "./LogSignin/Signin";
 import Login from "./LogSignin/Login";
 import ProtectedRoute from "./BaseComponents/ProtectedRoute";
 import Logout from "./LogSignin/Logout";
+import HomePage from "./HomePage/HomePage";
 
 
 const MyMainPage = () => {
@@ -18,7 +19,7 @@ const MyMainPage = () => {
                 <Route path="*" element={<h1>404 - Pagina non trovata</h1>} />
 
                 <Route element={<ProtectedRoute />}>
-                    <Route path="/" element={<h1>{import.meta.env.VITE_BACKEND_URL}</h1>} />
+                    <Route path="/" element={<HomePage />} />
                 </Route>
             </Routes>
         </>

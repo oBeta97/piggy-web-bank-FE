@@ -3,7 +3,7 @@ export const CLEAR_TOKEN = "CLEAR_TOKEN";
 
 export const setToken = (token: string) => ({
     type: SET_TOKEN,
-    payload: {token: token},
+    payload: { token: 'Bearer ' + token },
 });
 
 export const clearToken = () => ({
