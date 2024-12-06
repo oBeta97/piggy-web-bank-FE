@@ -10,13 +10,12 @@ const initialState: AuthState = {
     token: null,
 };
 
-// Reducer
 export const authReducer = (state:AuthState = initialState, action: reduxAction<AuthState>): AuthState => {
     switch (action.type) {
         case SET_TOKEN:
             return action.payload;
         case CLEAR_TOKEN:
-            return { token: null };
+            return initialState;
         default:
             return state;
     }

@@ -9,6 +9,9 @@ import { login } from "../../modules/fetches/LogSignin";
 import { isFetchError } from "../../modules/TypeGuard";
 import { Link, useNavigate } from "react-router-dom";
 import { setToken } from "../../redux/action/token";
+import { IdeleteResponse } from "../../interfaces/IdeleteResponse";
+import { Irole } from "../../interfaces/Irole";
+import { meRoles } from "../../modules/fetches/meDetails";
 
 
 
@@ -21,6 +24,26 @@ const LoginForm = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const loginFetch = async (loginObj: IloginObj): Promise<IloginResult> =>{
+        const res: IfetchError | IloginResult = await login(loginObj);
+
+        if (isFetchError(res)) {
+            switch (true) {
+                case res.message.toLowerCase().includes('password'):
+                    dispatchBackgroundChange(dispatch, true, res.message, setPasswordError);
+                    break;
+                case res.message.toLowerCase().includes('username'):
+                    dispatchBackgroundChange(dispatch, true, res.message, setUsernameError);
+                    break;
+                default:
+                    dispatchBackgroundChange(dispatch, true, res.message);
+            }
+        }
+
+        return res as IloginResult;
+    }
+
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -36,27 +59,20 @@ const LoginForm = () => {
             password: password
         }
 
-
-        const res: IfetchError | IloginResult = await login(loginObj);
-
-        if (isFetchError(res)) {
-            switch (true) {
-                case res.message.toLowerCase().includes('password'):
-                    dispatchBackgroundChange(dispatch, true, res.message, setPasswordError);
-                    break;
-                case res.message.toLowerCase().includes('username'):
-                    dispatchBackgroundChange(dispatch, true, res.message, setUsernameError);
-                    break;
-                default:
-                    dispatchBackgroundChange(dispatch, true, "Unknown error!");
-            }
-        }
-
+        const loginResult: IloginResult = await loginFetch(loginObj);
+        
         dispatch(
-            setToken((res as IloginResult).token)
+            setToken((loginResult as IloginResult).token)
         );
 
-        dispatchBackgroundChange(dispatch, false, `Welcome back board ${username}!`)
+        const rolesFetchResult: IfetchError | IdeleteResponse | Irole = await meRoles();
+
+        if(isFetchError(rolesFetchResult))
+            dispatchBackgroundChange(dispatch, true, rolesFetchResult.message);
+
+
+
+        dispatchBackgroundChange(dispatch, false, `Welcome back ${username}!`)
 
         setTimeout(() => {
             navigate('/')
@@ -66,63 +82,63 @@ const LoginForm = () => {
 
 
 
-    return (
+        return (
 
-        <Stack
-            component='form'
-            spacing={2}
-            sx={{
-                padding: {
-                    xs: '2em',
-                    md: '5em'
-                }
-            }}
-            onSubmit={handleSubmit}
-        >
+            <Stack
+                component='form'
+                spacing={2}
+                sx={{
+                    padding: {
+                        xs: '2em',
+                        md: '5em'
+                    }
+                }}
+                onSubmit={handleSubmit}
+            >
 
-            <TextField
-                id="username"
-                label="Username"
-                required
-                focused
-                color="secondary"
-                value={username}
-                error={usernameError}
-                onChange={(e) => setUsername(e.target.value)}
-            />
+                <TextField
+                    id="username"
+                    label="Username"
+                    required
+                    focused
+                    color="secondary"
+                    value={username}
+                    error={usernameError}
+                    onChange={(e) => setUsername(e.target.value)}
+                />
 
-            <TextField
-                id='password'
-                label='Password'
-                type="password"
-                required
-                focused
-                color="secondary"
-                value={password}
-                error={passwordError}
-                onChange={(e) => setPassword(e.target.value)}
-            />
+                <TextField
+                    id='password'
+                    label='Password'
+                    type="password"
+                    required
+                    focused
+                    color="secondary"
+                    value={password}
+                    error={passwordError}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
 
-            <Button type="submit" color="secondary" variant="contained">
-                Login
-            </Button>
+                <Button type="submit" color="secondary" variant="contained">
+                    Login
+                </Button>
 
-            <Link to='/signin'>
-                <Typography
-                    variant="body2"
-                    gutterBottom
-                    sx={{
-                        textDecoration:'none'
-                    }}
-                >
-                    Are you new here? Let's register!
-                </Typography>
-            </Link>
+                <Link to='/signin'>
+                    <Typography
+                        variant="body2"
+                        gutterBottom
+                        sx={{
+                            textDecoration: 'none'
+                        }}
+                    >
+                        Are you new here? Let's register!
+                    </Typography>
+                </Link>
 
 
-        </Stack>
+            </Stack>
 
-    );
-}
+        );
+    }
 
-export default LoginForm;
+    export default LoginForm;
