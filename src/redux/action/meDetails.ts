@@ -22,5 +22,5 @@ export const setUserCharacteristic = (uc: IuserCharacteristic) => ({
 })
 
 export const clearUserCharacteristic = () => ({
-    type: SET_USERCHARACTERISTICS,
+    type: CLEAR_USERCHARACTERISTICS,
 })

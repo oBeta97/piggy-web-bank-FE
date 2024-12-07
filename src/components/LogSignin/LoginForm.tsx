@@ -10,10 +10,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { setToken } from "../../redux/action/token";
 import { IdeleteResponse } from "../../interfaces/IdeleteResponse";
 import { Irole } from "../../interfaces/Irole";
-import { meRoles, meUserDetails } from "../../modules/fetches/meDetails";
-import { setRole, setUserCharacteristic } from "../../redux/action/meDetails";
+import { meRoles } from "../../modules/fetches/meDetails";
+import { setRole } from "../../redux/action/meDetails";
 import { checkPasswordSecurityLevel } from "../../modules/DataChecks";
-import { IuserCharacteristic } from "../../interfaces/Iuser";
+import { userCharacteristicsFetch } from "../../modules/dispatches/UserCharacteristics";
 
 
 
@@ -27,7 +27,7 @@ const LoginForm = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const loginFetch = async (loginObj: IloginObj): Promise<void> =>{
+    const loginFetch = async (loginObj: IloginObj): Promise<void> => {
         const res: IfetchError | IloginResult = await login(loginObj);
 
         if (isFetchError(res)) {
@@ -43,34 +43,23 @@ const LoginForm = () => {
             }
         }
 
-                
+
         dispatch(
             setToken((res as IloginResult).token)
         );
     }
 
-    const roleFetch = async ():Promise<void> => {
+    const roleFetch = async (): Promise<void> => {
 
         const rolesFetchResult: IfetchError | IdeleteResponse | Irole = await meRoles();
 
-        if(isFetchError(rolesFetchResult))
+        if (isFetchError(rolesFetchResult))
             dispatchBackgroundChange(dispatch, true, rolesFetchResult.message);
 
         dispatch(
             setRole(rolesFetchResult as Irole)
         );
 
-    }
-
-    const userCharacteristicsFetch = async ():Promise<void> =>{
-        const uc = await meUserDetails();
-
-        if(isFetchError(uc))
-            dispatchBackgroundChange(dispatch, true, uc.message);
-
-        dispatch(
-            setUserCharacteristic(uc as IuserCharacteristic)
-        );
     }
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -86,10 +75,10 @@ const LoginForm = () => {
             password: password
         }
 
-        
+
         await loginFetch(loginObj);
         await roleFetch();
-        await userCharacteristicsFetch();
+        await userCharacteristicsFetch(dispatch);
 
 
         dispatchBackgroundChange(dispatch, false, `Welcome back ${username}!`)
@@ -102,63 +91,63 @@ const LoginForm = () => {
 
 
 
-        return (
+    return (
 
-            <Stack
-                component='form'
-                spacing={2}
-                sx={{
-                    padding: {
-                        xs: '2em',
-                        md: '5em'
-                    }
-                }}
-                onSubmit={handleSubmit}
-            >
+        <Stack
+            component='form'
+            spacing={2}
+            sx={{
+                padding: {
+                    xs: '2em',
+                    md: '5em'
+                }
+            }}
+            onSubmit={handleSubmit}
+        >
 
-                <TextField
-                    id="username"
-                    label="Username"
-                    required
-                    focused
-                    color="secondary"
-                    value={username}
-                    error={usernameError}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
+            <TextField
+                id="username"
+                label="Username"
+                required
+                focused
+                color="secondary"
+                value={username}
+                error={usernameError}
+                onChange={(e) => setUsername(e.target.value)}
+            />
 
-                <TextField
-                    id='password'
-                    label='Password'
-                    type="password"
-                    required
-                    focused
-                    color="secondary"
-                    value={password}
-                    error={passwordError}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+            <TextField
+                id='password'
+                label='Password'
+                type="password"
+                required
+                focused
+                color="secondary"
+                value={password}
+                error={passwordError}
+                onChange={(e) => setPassword(e.target.value)}
+            />
 
-                <Button type="submit" color="secondary" variant="contained">
-                    Login
-                </Button>
+            <Button type="submit" color="secondary" variant="contained">
+                Login
+            </Button>
 
-                <Link to='/signin'>
-                    <Typography
-                        variant="body2"
-                        gutterBottom
-                        sx={{
-                            textDecoration: 'none'
-                        }}
-                    >
-                        Are you new here? Let's register!
-                    </Typography>
-                </Link>
+            <Link to='/signin'>
+                <Typography
+                    variant="body2"
+                    gutterBottom
+                    sx={{
+                        textDecoration: 'none'
+                    }}
+                >
+                    Are you new here? Let's register!
+                </Typography>
+            </Link>
 
 
-            </Stack>
+        </Stack>
 
-        );
-    }
+    );
+}
 
-    export default LoginForm;
+export default LoginForm;

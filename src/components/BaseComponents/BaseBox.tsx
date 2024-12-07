@@ -1,16 +1,18 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { PRIMARY_COLOR } from "../../modules/Colors";
 
 interface IContentBoxProps {
     content: JSX.Element
+    title?: string | undefined
 }
 
 const BaseBox = (props: IContentBoxProps) => {
     return (
-    
+
         <Box
             sx={{
                 display: 'flex',
+                flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
                 border: '1px solid ' + PRIMARY_COLOR,
@@ -21,9 +23,17 @@ const BaseBox = (props: IContentBoxProps) => {
                 boxShadow: 'inset 0 0 10px rgba(0, 0, 0, 0.2)'
             }}
         >
+            {
+                props.title &&
+
+                <Typography variant="button" color="secondary">
+                    {props.title}
+                </Typography>
+            }
+
             {props.content}
         </Box>
-    
+
     );
 }
 
