@@ -20,13 +20,12 @@ const BaseBox = (props: IContentBoxProps) => {
                 maxWidth: '650px',
                 background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))',
                 backdropFilter: 'blur(10px)',
-                boxShadow: 'inset 0 0 10px rgba(0, 0, 0, 0.2)'
+                boxShadow: 'inset 0 0 10px rgba(0, 0, 0, 0.2)',
             }}
         >
             {
                 props.title &&
-
-                <Typography variant="button" color="secondary">
+                <Typography variant="button" color="secondary" sx={{ mt: '1em' }}>
                     {props.title}
                 </Typography>
             }

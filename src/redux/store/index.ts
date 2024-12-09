@@ -9,6 +9,8 @@ import { persistStore } from "redux-persist";
 import { roleReducer, userCharacteristicReducer } from "../reducers/MeDetailsReducer";
 import { Irole } from "../../interfaces/Irole";
 import { IuserCharacteristic } from "../../interfaces/Iuser";
+import { modalReducer } from "../reducers/ModalReducer";
+import { ImodalState } from "../../interfaces/ImodalState";
 
 const authPersistConfig = {
     key: "PWB_Token",
@@ -31,6 +33,7 @@ const mergedReducers = combineReducers({
     auth: persistedAuthReducer,
     role: persistedRolerReducer,
     userCharacteristc: userCharacteristicReducer,
+    modalState: modalReducer
 });
 
 
@@ -39,6 +42,7 @@ export interface Istore {
     auth: AuthState,
     role: Irole,
     userCharacteristc: IuserCharacteristic
+    modalState: ImodalState
 }
 
 

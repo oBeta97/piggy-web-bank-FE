@@ -1,10 +1,36 @@
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
 import { IdynamicTable } from "../../interfaces/IdynamicTable";
+import { useSelector } from "react-redux";
+import { Istore } from "../../redux/store";
 
 const DynamicTable = <R extends string[]>(props: IdynamicTable<R>) => {
+
+    const userCurrency = useSelector((store: Istore) => store.userCharacteristc.currency);
+
+    const isAmount = (val: string): boolean => {
+
+        return (
+            !isNaN(Number(val.substring(0, val.length - 1).trim())) &&
+            val.substring(val.length - 1) === userCurrency
+        );
+    }
+
+    const getAmountStyle = (amountString: string) => {
+
+        const amountNumber = Number(amountString.substring(amountString.length - 1));
+
+        return (
+            <Typography color={amountNumber >= 0 ? "green" : "red"}>
+                {amountString}
+            </Typography>
+        )
+
+    }
+
+
     return (
         <TableContainer>
-            <Table size="small" aria-label="a dense table" sx={{ my: '1em', width:'95%', mx:'auto' }}>
+            <Table size="small" aria-label="a dense table" sx={{ my: '1em', width: '95%', mx: 'auto' }}>
                 {
                     props.tableTitles &&
                     <TableHead>
@@ -28,7 +54,11 @@ const DynamicTable = <R extends string[]>(props: IdynamicTable<R>) => {
                                 >
                                     {
                                         row.columns.map((col, i) => (
-                                            <TableCell key={"c" + i} align="center">{ col }</TableCell>
+                                            <TableCell key={"c" + i} align="center">{
+                                                isAmount(col) ?
+                                                    getAmountStyle(col) :
+                                                    col
+                                            }</TableCell>
                                         ))
                                     }
                                 </TableRow>

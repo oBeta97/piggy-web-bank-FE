@@ -1,4 +1,4 @@
-import { ThemeProvider } from '@mui/material'
+import { StyledEngineProvider, ThemeProvider } from '@mui/material'
 import './App.css'
 import { BaseBackground } from './components/BaseComponents/BaseBackground'
 import MyMainPage from './components/MyMainPage'
@@ -8,11 +8,13 @@ function App() {
 
   return (
     <ThemeProvider theme={myTheme}>
-      <BaseBackground
-        ChildComponent={
-          <MyMainPage />
-        }
-      />
+      <StyledEngineProvider injectFirst>
+        <BaseBackground
+          ChildComponent={
+            <MyMainPage />
+          }
+        />
+      </StyledEngineProvider>
     </ThemeProvider>
 
   )

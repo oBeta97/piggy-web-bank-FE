@@ -34,7 +34,7 @@ export const MyAlert = () => {
             variant = "filled"
             severity = {backgroundError.isError ? "error" : "success"}
             sx = {{
-                zIndex: 2,
+                zIndex: 9999,
                 position: "fixed",
                 bottom: (show ? '1em' : '-5em'),
                 right:'1em',

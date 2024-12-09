@@ -1,6 +1,6 @@
 import { Avatar, Box, IconButton, Menu, MenuItem, Tooltip, Typography } from "@mui/material";
 import { useState } from "react";
-import { MENU_COLOR, SECONDARY_COLOR, WHITE_COLOR } from "../../modules/Colors";
+import { SECONDARY_COLOR, TEXT_COLOR } from "../../modules/Colors";
 import { Link, useLocation } from "react-router-dom";
 
 
@@ -29,10 +29,6 @@ const UserIcon = () => {
             <Menu
                 sx={{
                     mt: '45px',
-                    '& .MuiPaper-root': {
-                        backgroundColor: MENU_COLOR,
-                        color: WHITE_COLOR
-                    },
                 }}
                 id="menu-appbar"
                 anchorEl={anchorElUser}
@@ -62,7 +58,7 @@ const UserIcon = () => {
                                     <Typography sx={{
                                         textAlign: 'center',
                                         textDecoration: 'none',
-                                        color: location.pathname === path ? SECONDARY_COLOR : WHITE_COLOR,
+                                        color: location.pathname === path ? SECONDARY_COLOR : TEXT_COLOR,
                                         fontWeight: location.pathname === path ? 'bold' : '',
                                     }}>{text}</Typography>
                                 </Link>
