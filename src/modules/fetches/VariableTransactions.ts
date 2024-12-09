@@ -5,10 +5,10 @@ import { IvariableTransaction, IvariableTransactionDTO } from "../../interfaces/
 import { getDeleteFetch, putPostFetch } from "./BaseFetches";
 
 
-export const getVariableTransactions = async (): Promise<IfetchError | IdeleteResponse | Ipage<IvariableTransaction>> => {
+export const getVariableTransactions = async (page:number = 0, size:number = 10, sortBy:string = 'id'): Promise<IfetchError | IdeleteResponse | Ipage<IvariableTransaction>> => {
     try {
         return await getDeleteFetch(
-            import.meta.env.VITE_BACKEND_URL + 'me/variable-transactions',
+            import.meta.env.VITE_BACKEND_URL + `me/variable-transactions?page=${page}&size=${size}&sortBy=${sortBy}`,
             "GET",
             true
         )

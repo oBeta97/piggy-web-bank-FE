@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import DynamicTable from "../BaseComponents/DynamicTable";
 import { IvariableTransaction } from "../../interfaces/Itransaction";
 import { getVariableTransactions } from "../../modules/fetches/VariableTransactions";
@@ -12,36 +12,30 @@ import { Button } from "@mui/material";
 import { isoDateTimeToLocalString } from "../../modules/Dates";
 import { changeModalState } from "../../redux/action/modal";
 import { ADD_NEW_VAR_TRANSACTION } from "../../modules/ModalContents";
+import { IuserCharacteristic } from "../../interfaces/Iuser";
 
 
 const VariableTransactionsTable = () => {
 
     const [transactions, setTransactions] = useState<IdynamicTableRow<[string, string, string]>[] | null>(null);
     const dispatch = useDispatch();
-    const isFirstRender = useRef(true);
 
-    const userCurrency: string = useSelector((store: Istore) => store.userCharacteristc.currency)
+    const userCharacteristic: IuserCharacteristic = useSelector((store: Istore) => store.userCharacteristc);
 
     const tableTitles = {
         columns: ['Name', 'Date time', 'Amount']
     };
 
-
-    // We will use useRef instead of:
-    // useEffect(()=>{},[]);
-
     useEffect(() => {
-        // this useEffect will be executed only when userCurrency will change and not at first render
-        if (!isFirstRender.current)
-            getTransactions()
-
-        isFirstRender.current = false
+        getTransactions()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userCurrency]);
+    }, [userCharacteristic]);
 
     const getTransactions = async (): Promise<void> => {
 
-        const variableTransactionsPage = await getVariableTransactions();
+        const variableTransactionsPage = await getVariableTransactions(0,20);
+
+
         if (isFetchError(variableTransactionsPage))
             dispatchBackgroundChange(dispatch, true, variableTransactionsPage.message);
 
@@ -52,7 +46,7 @@ const VariableTransactionsTable = () => {
                 columns: [
                     vt.name,
                     isoDateTimeToLocalString(vt.transactionDt),
-                    vt.amount.toString() + userCurrency]
+                    vt.amount.toString() + userCharacteristic.currency]
             })
         });
 

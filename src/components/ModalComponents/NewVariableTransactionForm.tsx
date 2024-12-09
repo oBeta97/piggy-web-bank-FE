@@ -12,6 +12,7 @@ import { createVariableTransaction } from "../../modules/fetches/VariableTransac
 import { IvariableTransaction, IvariableTransactionDTO } from "../../interfaces/Itransaction";
 import { hideModal } from "../../redux/action/modal";
 import { IfetchError } from "../../interfaces/IfetchError";
+import { userCharacteristicsFetch } from "../../modules/dispatches/UserCharacteristics";
 
 
 const NewVariableTransactionForm = () => {
@@ -105,7 +106,9 @@ const NewVariableTransactionForm = () => {
 
         dispatchBackgroundChange(dispatch, false, 'Transaction added!')
 
-        dispatch(hideModal())
+
+        userCharacteristicsFetch(dispatch);
+        dispatch(hideModal());
 
     }
 
