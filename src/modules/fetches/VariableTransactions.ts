@@ -39,3 +39,22 @@ export const createVariableTransaction = async (newVariableTransaction:Ivariable
         };
     }
 }
+
+
+
+export const getAllVariableTransactions = async (ofThisMonth:boolean = false): Promise<IfetchError | IdeleteResponse | IvariableTransaction[]> => {
+    try {
+        return await getDeleteFetch(
+            import.meta.env.VITE_BACKEND_URL + `me/variable-transactions/all?ofThisMonth=${ofThisMonth}`,
+            "GET",
+            true
+        )
+    } catch (err) {
+        return {
+            errorCode: '400',
+            message: err instanceof Error ? err.message : String(err),
+            dt: new Date().toISOString().toString()
+        };
+    }
+
+}

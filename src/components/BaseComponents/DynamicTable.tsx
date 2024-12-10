@@ -17,7 +17,7 @@ const DynamicTable = <R extends string[]>(props: IdynamicTable<R>) => {
 
     const getAmountStyle = (amountString: string) => {
 
-        const amountNumber = Number(amountString.substring(amountString.length - 1));
+        const amountNumber = Number(amountString.substring(0,amountString.length - 1).trim());
 
         return (
             <Typography color={amountNumber >= 0 ? "green" : "red"}>
