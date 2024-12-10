@@ -23,7 +23,7 @@ const HomePageTitle = () => {
                 gutterBottom
                 component="span"
             >
-                {userCharacteristc.todayAmount}
+                {userCharacteristc.todayAmount.toFixed(2)}
                 {userCharacteristc.currency}
             </Typography>
         </Typography>

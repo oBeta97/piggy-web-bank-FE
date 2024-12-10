@@ -13,7 +13,7 @@ const Signin = () => {
                 </Typography>
             }
             content={
-                <BaseBox content={
+                <BaseBox small content={
                     <SigninForm />
                 } />
             }

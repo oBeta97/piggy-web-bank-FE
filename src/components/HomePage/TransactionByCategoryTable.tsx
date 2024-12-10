@@ -35,7 +35,6 @@ const TransactionByCategoryTable = () => {
         });
 
 
-        console.log(res);
         setAmountByCategory(res);
     }
 

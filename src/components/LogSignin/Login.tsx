@@ -14,6 +14,7 @@ const Login = () => {
             }
             content={
                 <BaseBox
+                    small
                     content={
                         <LoginForm />
                     }
