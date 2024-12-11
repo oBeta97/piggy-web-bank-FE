@@ -4,18 +4,23 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useEffect, useState } from "react";
 import { getTransactionsCategories } from "../../modules/fetches/VariableTransactionCategories";
 import { isFetchError } from "../../modules/TypeGuard";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { dispatchBackgroundChange } from "../../modules/dispatches/BackgroundChange";
 import { ItransactionCategory } from "../../interfaces/ItransactionCategory";
 import dayjs from "dayjs";
-import { createVariableTransaction } from "../../modules/fetches/VariableTransactions";
+import { createVariableTransaction, getVariableTransaction, updateVariableTransaction } from "../../modules/fetches/VariableTransactions";
 import { IvariableTransaction, IvariableTransactionDTO } from "../../interfaces/Itransaction";
 import { hideModal } from "../../redux/action/modal";
 import { IfetchError } from "../../interfaces/IfetchError";
 import { userCharacteristicsFetch } from "../../modules/dispatches/UserCharacteristics";
+import { IselectedRow, resetSelectedDynamicTableRow } from "../../redux/action/dynamicTable";
+import { Istore } from "../../redux/store";
 
+interface IvariableTransactionProps {
+    isUpdate?: boolean
+}
 
-const NewVariableTransactionForm = () => {
+const VariableTransactionForm = (props: IvariableTransactionProps) => {
 
     const [transactionCategories, setTransactionCategories] = useState<ItransactionCategory[] | null>(null);
 
@@ -33,6 +38,7 @@ const NewVariableTransactionForm = () => {
 
     const [isExpense, setIsExpense] = useState<boolean>(true);
 
+    const selectedDynamicTableRow: IselectedRow = useSelector((store: Istore) => store.selectedDynamicTableRow)
 
 
     const dispatch = useDispatch();
@@ -46,8 +52,25 @@ const NewVariableTransactionForm = () => {
         setTransactionCategories(res as ItransactionCategory[])
     }
 
+    const setFormField = async ():Promise<void> =>{
+
+        const transaction = await getVariableTransaction(selectedDynamicTableRow.rowElementId as number);
+
+        checkErrors(transaction);
+
+        setName((transaction as IvariableTransaction).name);
+        setAmount(Math.abs((transaction as IvariableTransaction).amount));
+        setTransactionDt(dayjs((transaction as IvariableTransaction).transactionDt));
+        setIsExpense((transaction as IvariableTransaction).transactionCategory.isExpense);
+        setCategoryId((transaction as IvariableTransaction).transactionCategory.id);
+    }
+
     useEffect(() => {
         getCategories()
+
+        if(props.isUpdate)
+            setFormField()
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -68,7 +91,7 @@ const NewVariableTransactionForm = () => {
 
     }
 
-    const checkErrors = (res:IfetchError | IvariableTransaction) =>{
+    const checkErrors = (res: IfetchError | IvariableTransaction) => {
         if (isFetchError(res)) {
             switch (true) {
                 case res.message.toLowerCase().includes('name'):
@@ -100,15 +123,19 @@ const NewVariableTransactionForm = () => {
             transactionCategory_id: categoryId
         }
 
-        const res = await createVariableTransaction(transactionToSend);
+
+        const res = props.isUpdate ?
+            await updateVariableTransaction(selectedDynamicTableRow.rowElementId as number, transactionToSend) :
+            await createVariableTransaction(transactionToSend);
 
         checkErrors(res);
 
-        dispatchBackgroundChange(dispatch, false, 'Transaction added!')
+        dispatchBackgroundChange(dispatch, false, `Transaction ${props.isUpdate ? 'updated' : 'inserted'}!`)
 
 
         userCharacteristicsFetch(dispatch);
         dispatch(hideModal());
+        dispatch(resetSelectedDynamicTableRow());
 
     }
 
@@ -195,9 +222,11 @@ const NewVariableTransactionForm = () => {
                 }
             />
 
-            <Button type="submit" color="secondary" variant="contained">+</Button>
+            <Button type="submit" color="secondary" variant="contained">
+                {props.isUpdate ? 'update' : '+'}
+            </Button>
         </Stack>
     );
 }
 
-export default NewVariableTransactionForm;
+export default VariableTransactionForm;

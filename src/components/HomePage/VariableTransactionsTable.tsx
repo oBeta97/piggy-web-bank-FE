@@ -13,6 +13,7 @@ import { isoDateTimeToLocalString } from "../../modules/Dates";
 import { changeModalState } from "../../redux/action/modal";
 import { ADD_NEW_VAR_TRANSACTION } from "../../modules/ModalContents";
 import { IuserCharacteristic } from "../../interfaces/Iuser";
+import VariableTransactionTableClickedRow from "./VariableTransactionTableClickedRow";
 
 
 const VariableTransactionsTable = () => {
@@ -46,7 +47,9 @@ const VariableTransactionsTable = () => {
                 columns: [
                     vt.name,
                     isoDateTimeToLocalString(vt.transactionDt),
-                    vt.amount.toString() + userCharacteristic.currency]
+                    vt.amount.toString() + userCharacteristic.currency
+                ],
+                elementId: vt.id
             })
         });
 
@@ -69,6 +72,7 @@ const VariableTransactionsTable = () => {
             <DynamicTable
                 tableTitles={tableTitles}
                 tableRows={transactions as IdynamicTableRow<[string, string, string]>[]}
+                onContentTableClick={<VariableTransactionTableClickedRow />}
             />
             <Button
                 variant="contained"

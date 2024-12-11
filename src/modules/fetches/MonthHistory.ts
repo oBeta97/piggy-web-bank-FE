@@ -9,8 +9,7 @@ export const getMontHistory = async (page:number = 0, size:number = 10, sortBy:s
     try {
         return await getDeleteFetch(
             import.meta.env.VITE_BACKEND_URL + `me/month-histories?page=${page}&size=${size}&sortBy=${sortBy}`,
-            "GET",
-            true
+            "GET"
         )
     } catch (err) {
         return {

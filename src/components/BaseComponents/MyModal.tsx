@@ -7,8 +7,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Istore } from '../../redux/store';
 import { hideModal } from '../../redux/action/modal';
 import { ImodalState } from '../../interfaces/ImodalState';
-import { ADD_NEW_VAR_TRANSACTION } from '../../modules/ModalContents';
-import NewVariableTransactionForm from '../ModalComponents/NewVariableTransactionForm';
+import { ADD_NEW_VAR_TRANSACTION, DELETE_TRANSACTION_BUTTONS, UPDATE_VARIABLE_TRANSACTION_FORM } from '../../modules/ModalContents';
+import DeleteTransactionModalButtons from '../HomePage/DeleteTransactionModalButtons';
+import VariableTransactionForm from '../ModalComponents/VariableTransactionForm';
 
 const style = {
   position: 'absolute',
@@ -38,7 +39,11 @@ const MyModal = () => {
   const contentSelector = ():JSX.Element =>{
     switch(modalState.content){
       case ADD_NEW_VAR_TRANSACTION:
-        return <NewVariableTransactionForm />;
+        return <VariableTransactionForm />;
+      case DELETE_TRANSACTION_BUTTONS:
+        return <DeleteTransactionModalButtons />;
+      case UPDATE_VARIABLE_TRANSACTION_FORM:
+          return <VariableTransactionForm isUpdate />;
       default:
         return <></>;
     }
@@ -52,7 +57,7 @@ const MyModal = () => {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
+        <Typography id="modal-modal-title" textAlign='center' variant="h6" component="h2">
           {modalState.title}
         </Typography>
         {

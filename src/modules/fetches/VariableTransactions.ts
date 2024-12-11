@@ -5,12 +5,11 @@ import { IvariableTransaction, IvariableTransactionDTO } from "../../interfaces/
 import { getDeleteFetch, putPostFetch } from "./BaseFetches";
 
 
-export const getVariableTransactions = async (page:number = 0, size:number = 10, sortBy:string = 'id'): Promise<IfetchError | IdeleteResponse | Ipage<IvariableTransaction>> => {
+export const getVariableTransactions = async (page: number = 0, size: number = 10, sortBy: string = 'id'): Promise<IfetchError | Ipage<IvariableTransaction>> => {
     try {
         return await getDeleteFetch(
             import.meta.env.VITE_BACKEND_URL + `me/variable-transactions?page=${page}&size=${size}&sortBy=${sortBy}`,
-            "GET",
-            true
+            "GET"
         )
     } catch (err) {
         return {
@@ -22,14 +21,28 @@ export const getVariableTransactions = async (page:number = 0, size:number = 10,
 
 }
 
+export const getVariableTransaction = async (id: number): Promise<IfetchError | IvariableTransaction> => {
+    try {
+        return await getDeleteFetch(
+            import.meta.env.VITE_BACKEND_URL + `me/variable-transactions/${id}`,
+            "GET"
+        )
+    } catch (err) {
+        return {
+            errorCode: '400',
+            message: err instanceof Error ? err.message : String(err),
+            dt: new Date().toISOString().toString()
+        };
+    }
 
-export const createVariableTransaction = async (newVariableTransaction:IvariableTransactionDTO): Promise<IfetchError | IvariableTransaction> => {
+}
+
+export const createVariableTransaction = async (newVariableTransaction: IvariableTransactionDTO): Promise<IfetchError | IvariableTransaction> => {
     try {
         return await putPostFetch(
             import.meta.env.VITE_BACKEND_URL + 'me/variable-transactions',
             "POST",
             JSON.stringify(newVariableTransaction),
-            true
         )
     } catch (err) {
         return {
@@ -42,12 +55,44 @@ export const createVariableTransaction = async (newVariableTransaction:Ivariable
 
 
 
-export const getAllVariableTransactions = async (ofThisMonth:boolean = false): Promise<IfetchError | IdeleteResponse | IvariableTransaction[]> => {
+export const getAllVariableTransactions = async (ofThisMonth: boolean = false): Promise<IfetchError | IvariableTransaction[]> => {
     try {
         return await getDeleteFetch(
             import.meta.env.VITE_BACKEND_URL + `me/variable-transactions/all?ofThisMonth=${ofThisMonth}`,
             "GET",
-            true
+        )
+    } catch (err) {
+        return {
+            errorCode: '400',
+            message: err instanceof Error ? err.message : String(err),
+            dt: new Date().toISOString().toString()
+        };
+    }
+}
+
+
+export const deleteVariableTransaction = async (vTransactionId: number): Promise<IfetchError | IdeleteResponse> => {
+    try {
+        return await getDeleteFetch(
+            import.meta.env.VITE_BACKEND_URL + `me/variable-transactions/${vTransactionId}`,
+            "DELETE",
+        )
+    } catch (err) {
+        return {
+            errorCode: '400',
+            message: err instanceof Error ? err.message : String(err),
+            dt: new Date().toISOString().toString()
+        };
+    }
+}
+
+
+export const updateVariableTransaction = async (idToUpdate: number, newTrans: IvariableTransactionDTO): Promise<IfetchError | IvariableTransaction> => {
+    try {
+        return await putPostFetch(
+            import.meta.env.VITE_BACKEND_URL + 'me/variable-transactions/' + idToUpdate,
+            "PUT",
+            JSON.stringify(newTrans),
         )
     } catch (err) {
         return {

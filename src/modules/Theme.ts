@@ -1,5 +1,5 @@
 import { createTheme } from "@mui/material";
-import { MENU_COLOR, PRIMARY_COLOR, SECONDARY_COLOR, TEXT_COLOR } from "./Colors";
+import { MENU_COLOR, PRIMARY_COLOR, SECONDARY_COLOR, TEXT_COLOR, WARNING_COLOR } from "./Colors";
 
 
 const myTheme = createTheme({
@@ -9,6 +9,9 @@ const myTheme = createTheme({
         },
         secondary: {
             main: SECONDARY_COLOR
+        },
+        warning:{
+            main: WARNING_COLOR
         },
         text: {
             primary: TEXT_COLOR,

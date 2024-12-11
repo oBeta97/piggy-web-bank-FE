@@ -9,8 +9,7 @@ export const getGoals = async (all:boolean = false, page:number = 0, size:number
     try {
         return await getDeleteFetch(
             import.meta.env.VITE_BACKEND_URL + `me/goals?page=${page}&size=${size}&sortBy=${sortBy}&all=${all}`,
-            "GET",
-            true
+            "GET"
         )
     } catch (err) {
         return {

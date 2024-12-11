@@ -8,8 +8,7 @@ export const getTransactionsCategories = async (): Promise<IfetchError | Idelete
     try {
         return await getDeleteFetch(
             import.meta.env.VITE_BACKEND_URL + 'me/transaction-categories',
-            "GET",
-            true
+            "GET"
         )
     } catch (err) {
         return {
