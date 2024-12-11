@@ -3,6 +3,7 @@ import VariableTransactionsTable from "./VariableTransactionsTable";
 import BaseBox from "../BaseComponents/BaseBox";
 import TransactionByCategoryTable from "./TransactionByCategoryTable";
 import GoalBar from "./GoalBar";
+import SavingsChart from "./SavingsChart";
 
 
 const HomePageContent = () => {
@@ -26,8 +27,11 @@ const HomePageContent = () => {
                     content={<VariableTransactionsTable />}
                 />
             </Grid2>
-            <Grid2 size={4} sx={{ display: { xs: 'none', lg: 'block' } }} container alignItems={"center"} justifyContent={"center"}>
-                cioafaiuerfh
+            <Grid2 size={4} sx={{ display: { xs: 'none', lg: 'flex' } }} container alignItems="center" justifyContent="center">
+                <BaseBox
+                    title="Savings Chart"
+                    content={<SavingsChart />}
+                />
             </Grid2>
         </Grid2>
     );
