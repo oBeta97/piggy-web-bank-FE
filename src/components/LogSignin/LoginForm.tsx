@@ -1,7 +1,6 @@
 import { Button, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { PASSWORD_REGEX } from "../../modules/Regex";
 import { dispatchBackgroundChange } from "../../modules/dispatches/BackgroundChange";
 import { IfetchError } from "../../interfaces/IfetchError";
 import { IloginObj, IloginResult } from "../../interfaces/Ilogin";
@@ -9,6 +8,12 @@ import { login } from "../../modules/fetches/LogSignin";
 import { isFetchError } from "../../modules/TypeGuard";
 import { Link, useNavigate } from "react-router-dom";
 import { setToken } from "../../redux/action/token";
+import { IdeleteResponse } from "../../interfaces/IdeleteResponse";
+import { Irole } from "../../interfaces/Irole";
+import { meRoles } from "../../modules/fetches/meDetails";
+import { setRole } from "../../redux/action/meDetails";
+import { checkPasswordSecurityLevel } from "../../modules/DataChecks";
+import { userCharacteristicsFetch } from "../../modules/dispatches/UserCharacteristics";
 
 
 
@@ -22,21 +27,7 @@ const LoginForm = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-
-        setUsernameError(false);
-        setPasswordError(false);
-
-        if (!password.match(PASSWORD_REGEX))
-            dispatchBackgroundChange(dispatch, true, "Password not secure enough. It can't be right!", setPasswordError);
-
-        const loginObj: IloginObj = {
-            username: username,
-            password: password
-        }
-
-
+    const loginFetch = async (loginObj: IloginObj): Promise<void> => {
         const res: IfetchError | IloginResult = await login(loginObj);
 
         if (isFetchError(res)) {
@@ -48,15 +39,49 @@ const LoginForm = () => {
                     dispatchBackgroundChange(dispatch, true, res.message, setUsernameError);
                     break;
                 default:
-                    dispatchBackgroundChange(dispatch, true, "Unknown error!");
+                    dispatchBackgroundChange(dispatch, true, res.message);
             }
         }
+
 
         dispatch(
             setToken((res as IloginResult).token)
         );
+    }
 
-        dispatchBackgroundChange(dispatch, false, `Welcome back board ${username}!`)
+    const roleFetch = async (): Promise<void> => {
+
+        const rolesFetchResult: IfetchError | IdeleteResponse | Irole = await meRoles();
+
+        if (isFetchError(rolesFetchResult))
+            dispatchBackgroundChange(dispatch, true, rolesFetchResult.message);
+
+        dispatch(
+            setRole(rolesFetchResult as Irole)
+        );
+
+    }
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        setUsernameError(false);
+        setPasswordError(false);
+
+        checkPasswordSecurityLevel(password, dispatch, setPasswordError);
+
+        const loginObj: IloginObj = {
+            username: username,
+            password: password
+        }
+
+
+        await loginFetch(loginObj);
+        await roleFetch();
+        await userCharacteristicsFetch(dispatch);
+
+
+        dispatchBackgroundChange(dispatch, false, `Welcome back ${username}!`)
 
         setTimeout(() => {
             navigate('/')
@@ -112,7 +137,7 @@ const LoginForm = () => {
                     variant="body2"
                     gutterBottom
                     sx={{
-                        textDecoration:'none'
+                        textDecoration: 'none'
                     }}
                 >
                     Are you new here? Let's register!

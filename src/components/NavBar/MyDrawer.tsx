@@ -1,5 +1,5 @@
 import { Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
-import { MENU_COLOR, SECONDARY_COLOR, WHITE_COLOR } from "../../modules/Colors";
+import { SECONDARY_COLOR, WHITE_COLOR } from "../../modules/Colors";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Istore } from "../../redux/store";
@@ -40,12 +40,6 @@ const MyDrawer = (props: myDrawerProps) => {
             open={props.openDrawer}
             onClose={() => props.drawerToggle(false)}
             anchor='right'
-            sx={{
-                '& .MuiPaper-root': {
-                    backgroundColor: MENU_COLOR,
-                    color: WHITE_COLOR
-                },
-            }}
         >
 
             <Box sx={{ width: 250 }} role="presentation" onClick={() => props.drawerToggle(false)}>

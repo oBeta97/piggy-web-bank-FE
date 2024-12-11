@@ -6,6 +6,7 @@ import { Istore } from '../../redux/store'
 import { MyAlert } from './MyAlert';
 import { IbackgroundError } from '../../redux/action';
 import { useEffect, useState } from 'react';
+import MyModal from './MyModal';
 
 
 
@@ -54,6 +55,7 @@ export const BaseBackground = (props: prop) => {
             </div>
 
             <MyAlert />
+            <MyModal />
 
         </div>
     )

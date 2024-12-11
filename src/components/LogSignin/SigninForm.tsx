@@ -26,7 +26,12 @@ const SigninForm = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const checkFormValues = () => {
+    const checkFormValues = ():void => {
+        
+        setEmailError(false);
+        setPasswordError(false);
+        setUsernameError(false);
+        
         if (!email.match(EMAIL_REGEX))
             dispatchBackgroundChange(dispatch, true, "Email not valid!", setEmailError);
 
@@ -40,10 +45,6 @@ const SigninForm = () => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
-        setEmailError(false);
-        setPasswordError(false);
-        setUsernameError(false);
 
         checkFormValues();
 

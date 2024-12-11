@@ -98,14 +98,14 @@ export const getDeleteFetch = async (
             };
         }
 
-        const res = await response.json();
 
         if (method === "DELETE")
             return {
-                responseCode: (res as IdeleteResponse).responseCode,
-                text: (res as IdeleteResponse).text
+                responseCode: response.status,
+                text: 'Deletetion done!'
             };
 
+        const res = await response.json();
 
         return res;
 
