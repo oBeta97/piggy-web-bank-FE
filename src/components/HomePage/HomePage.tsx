@@ -1,4 +1,5 @@
 import ContentContainer from "../BaseComponents/ContentContainer";
+import HomePageContent from "./HomePageContent";
 import HomePageTitle from "./HomePageTitle";
 
 
@@ -6,7 +7,7 @@ const HomePage = () => {
     return (
         <ContentContainer
             title={<HomePageTitle />}
-            content={<h1>cccccciao</h1>}
+            content={<HomePageContent />}
         />
     );
 }

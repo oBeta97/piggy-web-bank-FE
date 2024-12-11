@@ -16,8 +16,7 @@ export const meRoles = async (): Promise<IfetchError | IdeleteResponse | Irole> 
     try {
         return await getDeleteFetch(
             import.meta.env.VITE_BACKEND_URL + 'me/roles',
-            "GET",
-            true
+            "GET"
         )
     } catch (err) {
         return {
@@ -33,8 +32,7 @@ export const meUserDetails = async (): Promise<IfetchError | IdeleteResponse | I
     try {
         return await getDeleteFetch(
             import.meta.env.VITE_BACKEND_URL + 'me/user-characteristics',
-            "GET",
-            true
+            "GET"
         )
     } catch (err) {
         return {

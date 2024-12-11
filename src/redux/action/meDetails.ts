@@ -19,8 +19,9 @@ export const clearRole = () => ({
 export const setUserCharacteristic = (uc: IuserCharacteristic) => ({
     type: SET_USERCHARACTERISTICS,
     payload: uc
-})
+});
 
 export const clearUserCharacteristic = () => ({
-    type: SET_USERCHARACTERISTICS,
-})
+    type: CLEAR_USERCHARACTERISTICS,
+});
+

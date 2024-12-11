@@ -1,6 +1,6 @@
 import { Box, Button, Menu, MenuItem, Typography } from "@mui/material";
 import { useState } from "react";
-import { MENU_COLOR, SECONDARY_COLOR, WHITE_COLOR } from "../../modules/Colors";
+import { SECONDARY_COLOR, WHITE_COLOR } from "../../modules/Colors";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Istore } from "../../redux/store";
@@ -80,10 +80,6 @@ const NavList = () => {
             <Menu
                 sx={{
                     mt: '35px',
-                    '& .MuiPaper-root': {
-                        backgroundColor: MENU_COLOR,
-                        color: WHITE_COLOR
-                    },
                 }}
                 id="menu-appbar"
                 anchorEl={anchorMA}
