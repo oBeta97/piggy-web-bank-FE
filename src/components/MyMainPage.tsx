@@ -5,6 +5,7 @@ import Login from "./LogSignin/Login";
 import ProtectedRoute from "./BaseComponents/ProtectedRoute";
 import Logout from "./LogSignin/Logout";
 import HomePage from "./HomePage/HomePage";
+import FixedTransactionsPage from "./FixedTransactions/FixedTransactionsPage";
 
 
 const MyMainPage = () => {
@@ -20,6 +21,8 @@ const MyMainPage = () => {
 
                 <Route element={<ProtectedRoute />}>
                     <Route path="/" element={<HomePage />} />
+                    <Route path="/fixed-income" element={< FixedTransactionsPage incomes />} />
+                    <Route path="/fixed-expenses" element={< FixedTransactionsPage expenses />} />
                 </Route>
             </Routes>
         </>
