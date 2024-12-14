@@ -62,17 +62,6 @@ const FixedTransactionsPage = (props: IfixedTransactionPage) => {
 
 
     const handleAddClick = async (): Promise<void> => {
-
-        // console.log(await addNewFixedTransactions(
-        //     {
-        //         name: 'stipendio',
-        //         amount: 1000,
-        //         period: 1
-        //     }
-        // ))
-
-        // getFixedTransactions();
-
         dispatch(
             changeModalState({
                 show: true,
