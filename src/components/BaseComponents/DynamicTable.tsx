@@ -1,5 +1,5 @@
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
-import { IdynamicTable } from "../../interfaces/IdynamicTable";
+import { IdynamicTable, IdynamicTableRow } from "../../interfaces/IdynamicTable";
 import { useDispatch, useSelector } from "react-redux";
 import { Istore } from "../../redux/store";
 import { useEffect, useState } from "react";
@@ -39,8 +39,28 @@ const DynamicTable = <R extends string[]>(props: IdynamicTable<R>) => {
 
     }
 
+    const getTableColContent = (row: IdynamicTableRow<R>, col: string) => {
+
+        if (row.customStyle && row.customStyle.textColor)
+            return (
+                <Typography color={row.customStyle.textColor}>
+                    {col}
+                </Typography>
+            );
+
+        if (row.customStyle && row.customStyle.isNotAmount)
+            return col;
+
+
+        if (isAmount(col))
+            return getAmountStyle(col);
+
+        return col;
+
+    }
+
     const handleContentRowClick = (rowIndex: number, elementId: number | string | undefined): void => {
-        dispatch(setSelectedDynamicTableRow({ rowIndex: rowIndex, rowElementId: elementId}))
+        dispatch(setSelectedDynamicTableRow({ rowIndex: rowIndex, rowElementId: elementId }))
     }
 
     return (
@@ -75,9 +95,7 @@ const DynamicTable = <R extends string[]>(props: IdynamicTable<R>) => {
                                         {
                                             row.columns.map((col, i) => (
                                                 <TableCell key={"c" + i} align="center">{
-                                                    isAmount(col) ?
-                                                        getAmountStyle(col) :
-                                                        col
+                                                    getTableColContent(row, col)
                                                 }</TableCell>
                                             ))
                                         }

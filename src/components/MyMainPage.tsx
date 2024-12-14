@@ -6,6 +6,8 @@ import ProtectedRoute from "./BaseComponents/ProtectedRoute";
 import Logout from "./LogSignin/Logout";
 import HomePage from "./HomePage/HomePage";
 import FixedTransactionsPage from "./FixedTransactions/FixedTransactionsPage";
+import { Typography } from "@mui/material";
+import SavingsManagementPage from "./SavingsManagement/SavingsManagementPage";
 
 
 const MyMainPage = () => {
@@ -17,12 +19,13 @@ const MyMainPage = () => {
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/logout" element={<Logout />} />
-                <Route path="*" element={<h1>404 - Pagina non trovata</h1>} />
+                <Route path="*" element={<Typography variant="h2">404 - Page not found</Typography>} />
 
                 <Route element={<ProtectedRoute />}>
                     <Route path="/" element={<HomePage />} />
-                    <Route path="/fixed-income" element={< FixedTransactionsPage incomes />} />
-                    <Route path="/fixed-expenses" element={< FixedTransactionsPage expenses />} />
+                    <Route path="/fixed-incomes" element={<FixedTransactionsPage incomes />} />
+                    <Route path="/fixed-expenses" element={<FixedTransactionsPage expenses />} />
+                    <Route path="/savings-managment" element={<SavingsManagementPage />} />
                 </Route>
             </Routes>
         </>

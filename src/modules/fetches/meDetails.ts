@@ -1,4 +1,3 @@
-import { IdeleteResponse } from "../../interfaces/IdeleteResponse";
 import { IfetchError } from "../../interfaces/IfetchError";
 import { Irole } from "../../interfaces/Irole";
 import { getDeleteFetch } from "./BaseFetches";
@@ -6,7 +5,7 @@ import { store } from "../../redux/store";
 import { IuserCharacteristic } from "../../interfaces/Iuser";
 
 
-export const meRoles = async (): Promise<IfetchError | IdeleteResponse | Irole> =>{
+export const meRoles = async (): Promise<IfetchError | Irole> =>{
 
     const localRole:Irole = store.getState().role;
 
@@ -28,7 +27,7 @@ export const meRoles = async (): Promise<IfetchError | IdeleteResponse | Irole> 
 
 }
 
-export const meUserDetails = async (): Promise<IfetchError | IdeleteResponse | IuserCharacteristic> =>{
+export const meUserDetails = async (): Promise<IfetchError | IuserCharacteristic> =>{
     try {
         return await getDeleteFetch(
             import.meta.env.VITE_BACKEND_URL + 'me/user-characteristics',

@@ -6,6 +6,7 @@ interface IContentBoxProps {
     title?: string | undefined
     secondary?: boolean
     small?: boolean
+    medium?: boolean
 }
 
 const BaseBox = (props: IContentBoxProps) => {
@@ -19,7 +20,7 @@ const BaseBox = (props: IContentBoxProps) => {
                 alignItems: 'center',
                 border: '1px solid ' + (props.secondary ? SECONDARY_COLOR : PRIMARY_COLOR),
                 borderRadius: '25px',
-                minWidth: (props.small ? '650px' : '85%'),
+                minWidth: (props.small ? '300px' : props.medium ? '50%' : '85%'),
                 background:
                     props.secondary ?
                         SECONDARY_COLOR :
