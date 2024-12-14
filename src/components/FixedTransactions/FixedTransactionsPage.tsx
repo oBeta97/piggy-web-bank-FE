@@ -82,7 +82,7 @@ const FixedTransactionsPage = (props: IfixedTransactionPage) => {
             }
             content={
                 <BaseBox
-                    small
+                    medium
                     content={<>
                         <DynamicTable
                             tableTitles={titles}

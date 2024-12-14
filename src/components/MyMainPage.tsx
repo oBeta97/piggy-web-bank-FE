@@ -23,7 +23,7 @@ const MyMainPage = () => {
 
                 <Route element={<ProtectedRoute />}>
                     <Route path="/" element={<HomePage />} />
-                    <Route path="/fixed-income" element={<FixedTransactionsPage incomes />} />
+                    <Route path="/fixed-incomes" element={<FixedTransactionsPage incomes />} />
                     <Route path="/fixed-expenses" element={<FixedTransactionsPage expenses />} />
                     <Route path="/savings-managment" element={<SavingsManagementPage />} />
                 </Route>

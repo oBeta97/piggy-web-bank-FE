@@ -26,7 +26,8 @@ const ContentContainer = (props: IContentContainerProps) => {
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: "center",
-                    height: '15%'
+                    height: '15%',
+                    textAlign:'center'
                 }}
             >
                 {props.title}
