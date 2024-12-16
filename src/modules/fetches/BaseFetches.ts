@@ -3,9 +3,9 @@ import { IfetchError } from '../../interfaces/IfetchError';
 import { store } from '../../redux/store';
 
 
-export const putPostFetch = async (
+export const putPostPatchFetch = async (
     URL: string,
-    method: "PUT" | "POST",
+    method: "PUT" | "POST" | "PATCH",
     json: string,
     withoutValidation: boolean = false
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -46,6 +46,9 @@ export const putPostFetch = async (
                 dt: new Date().toISOString().toString()
             };
         }
+
+        if(response.status === 204)
+            return response;
 
         return await response.json();
 

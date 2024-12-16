@@ -83,21 +83,22 @@ const FixedTransactionsPage = (props: IfixedTransactionPage) => {
             content={
                 <BaseBox
                     medium
-                    content={<>
-                        <DynamicTable
-                            tableTitles={titles}
-                            tableRows={fixedTransactions as IdynamicTableRow<[string, string, string]>[]}
-                            onContentTableClick={<FixedTransactionTableClickedRow />}
-                        />
-                        <Button
-                            variant="contained"
-                            color="secondary"
-                            sx={{ mb: '1em' }}
-                            onClick={handleAddClick}
-                        >
-                            ADD
-                        </Button>
-                    </>
+                    content={
+                        <>
+                            <DynamicTable
+                                tableTitles={titles}
+                                tableRows={fixedTransactions as IdynamicTableRow<[string, string, string]>[]}
+                                onContentTableClick={<FixedTransactionTableClickedRow />}
+                            />
+                            <Button
+                                variant="contained"
+                                color="secondary"
+                                sx={{ mb: '1em' }}
+                                onClick={handleAddClick}
+                            >
+                                ADD
+                            </Button>
+                        </>
                     }
                 />
             }
