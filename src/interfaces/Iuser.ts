@@ -15,3 +15,12 @@ export interface IuserCharacteristic {
     minimumSavings: number;
     user: Iuser;
 }
+
+
+
+export interface IupdateUser {
+    name: string;
+    surname: string;
+    username: string;
+    email: string;
+}
