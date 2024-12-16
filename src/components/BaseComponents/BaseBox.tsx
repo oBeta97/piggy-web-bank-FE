@@ -3,7 +3,7 @@ import { PRIMARY_COLOR, SECONDARY_COLOR } from "../../modules/Colors";
 
 interface IContentBoxProps {
     content: JSX.Element
-    title?: string | undefined
+    title?: string
     secondary?: boolean
     small?: boolean
     medium?: boolean

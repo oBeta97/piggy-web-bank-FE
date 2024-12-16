@@ -5,7 +5,6 @@ import { EMAIL_REGEX } from "../../modules/Regex";
 import { Button, Stack, TextField } from "@mui/material";
 import { isFetchError } from "../../modules/TypeGuard";
 import { IfetchError } from "../../interfaces/IfetchError";
-import { IsigninObj } from "../../interfaces/IsigninObj";
 import { IupdateUser, Iuser } from "../../interfaces/Iuser";
 import { hideModal } from "../../redux/action/modal";
 import { getMe, updateUserData } from "../../modules/fetches/UserFectches";
@@ -65,7 +64,7 @@ const UpdateUserData = () => {
             email: email,
         }
 
-        const res: IfetchError | IsigninObj = await updateUserData(updatedUser);
+        const res: IfetchError | Iuser = await updateUserData(updatedUser);
 
         if (isFetchError(res)) {
             switch (true) {
