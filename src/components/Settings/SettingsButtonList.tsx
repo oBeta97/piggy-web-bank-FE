@@ -22,7 +22,7 @@ const SettingsButtonList = () => {
 
         dispatch(changeModalState({
             show:true,
-            title: targetKey.replaceAll('_', ' '),
+            title: targetKey.replace(/_/g, ' '),
             content: targetKey
         }))
 
@@ -42,7 +42,7 @@ const SettingsButtonList = () => {
                         data-key={buttonData}
                     >
                         {
-                            buttonData.replaceAll('_', ' ')
+                            buttonData.replace(/_/g, ' ')
                         }
                     </Button>
                 ))
