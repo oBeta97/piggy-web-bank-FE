@@ -27,6 +27,15 @@ const SavingsChart = () => {
         if (isFetchError(mh))
             dispatchBackgroundChange(dispatch, true, mh.message);
 
+        // sorting mh based on the month
+        (mh as Ipage<ImonthHistory>).content = (mh as Ipage<ImonthHistory>).content.sort((a, b) => {
+            if (a.year === b.year) {
+                return a.month - b.month;
+            }
+            return a.year - b.year;
+        });
+
+
         const xAxisLabels = (mh as Ipage<ImonthHistory>).content.map(
             (month) => `${month.month}-${month.year}`
         );
