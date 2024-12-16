@@ -24,3 +24,8 @@ export interface IupdateUser {
     username: string;
     email: string;
 }
+
+
+export interface IupdateMinimumSavings{
+    minimumSavings:number
+}
