@@ -1,5 +1,5 @@
 import { Button, Stack } from "@mui/material";
-import { ADD_TRANS_CATEGORY, CHANGE_PASSWORD, SET_MINIMUM_SAVINGS, UPDATE_USER_DATA } from "../../modules/ModalContents";
+import { CHANGE_PASSWORD, SET_MINIMUM_SAVINGS, UPDATE_USER_DATA } from "../../modules/ModalContents";
 import { useDispatch } from "react-redux";
 import { changeModalState } from "../../redux/action/modal";
 
@@ -13,7 +13,7 @@ const SettingsButtonList = () => {
         UPDATE_USER_DATA,
         CHANGE_PASSWORD,
         SET_MINIMUM_SAVINGS,
-        ADD_TRANS_CATEGORY
+        // ADD_TRANS_CATEGORY
     ];
 
     const handleClick = (e: React.MouseEvent<HTMLElement>):void =>{
