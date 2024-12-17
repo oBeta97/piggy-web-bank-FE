@@ -1,14 +1,14 @@
 import { IfetchError } from "../../interfaces/IfetchError";
 import { IloginObj, IloginResult } from "../../interfaces/Ilogin";
 import { IsigninObj } from "../../interfaces/IsigninObj";
-import { putPostFetch } from "./BaseFetches";
+import { putPostPatchFetch } from "./BaseFetches";
 
 
 
 export const signin = async (signinObj: IsigninObj): Promise<IfetchError | IsigninObj> => {
 
     try {
-        return await putPostFetch(
+        return await putPostPatchFetch(
             import.meta.env.VITE_BACKEND_URL + 'auth/signin',
             "POST",
             JSON.stringify(signinObj),
@@ -27,7 +27,7 @@ export const signin = async (signinObj: IsigninObj): Promise<IfetchError | Isign
 export const login = async (loginObj: IloginObj): Promise<IfetchError | IloginResult> => {
 
     try {
-        return await putPostFetch(
+        return await putPostPatchFetch(
             import.meta.env.VITE_BACKEND_URL + 'auth/login',
             "POST",
             JSON.stringify(loginObj),

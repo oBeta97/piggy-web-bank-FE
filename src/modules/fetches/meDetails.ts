@@ -1,8 +1,8 @@
 import { IfetchError } from "../../interfaces/IfetchError";
 import { Irole } from "../../interfaces/Irole";
-import { getDeleteFetch } from "./BaseFetches";
+import { getDeleteFetch, putPostPatchFetch } from "./BaseFetches";
 import { store } from "../../redux/store";
-import { IuserCharacteristic } from "../../interfaces/Iuser";
+import { IupdateMinimumSavings, IuserCharacteristic } from "../../interfaces/Iuser";
 
 
 export const meRoles = async (): Promise<IfetchError | Irole> =>{
@@ -41,4 +41,21 @@ export const meUserDetails = async (): Promise<IfetchError | IuserCharacteristic
         };
     }
 
+}
+
+
+export const updateUserMinimumSavings = async (newMinimumSavings:IupdateMinimumSavings) => {
+      try {
+            return await putPostPatchFetch(
+                import.meta.env.VITE_BACKEND_URL + 'me/minimum-savings',
+                "PATCH",
+                JSON.stringify(newMinimumSavings),
+            )
+        } catch (err) {
+            return {
+                errorCode: '400',
+                message: err instanceof Error ? err.message : String(err),
+                dt: new Date().toISOString().toString()
+            };
+        }
 }

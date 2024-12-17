@@ -1,7 +1,7 @@
 import { IdeleteResponse } from "../../interfaces/IdeleteResponse";
 import { IfetchError } from "../../interfaces/IfetchError";
 import { IfixedTransaction, IfixedTransactionDTO } from "../../interfaces/IfixedTransaction";
-import { getDeleteFetch, putPostFetch } from "./BaseFetches";
+import { getDeleteFetch, putPostPatchFetch } from "./BaseFetches";
 
 
 
@@ -40,7 +40,7 @@ export const getFixedTransaction = async (transactionId: number): Promise<Ifetch
 
 export const addNewFixedTransactions = async (newFixedTransaction: IfixedTransactionDTO): Promise<IfetchError | IfixedTransaction> => {
     try {
-        return await putPostFetch(
+        return await putPostPatchFetch(
             import.meta.env.VITE_BACKEND_URL + 'me/fixed-transactions',
             "POST",
             JSON.stringify(newFixedTransaction),
@@ -73,7 +73,7 @@ export const deleteFixedTransaction = async (fTransactionId: number): Promise<If
 
 export const updateFixedTransactions = async (fTransactionId: number, newFixedTransaction: IfixedTransactionDTO): Promise<IfetchError | IfixedTransaction> => {
     try {
-        return await putPostFetch(
+        return await putPostPatchFetch(
             import.meta.env.VITE_BACKEND_URL + 'me/fixed-transactions/' + fTransactionId,
             "PUT",
             JSON.stringify(newFixedTransaction),

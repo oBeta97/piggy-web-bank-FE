@@ -8,6 +8,7 @@ import HomePage from "./HomePage/HomePage";
 import FixedTransactionsPage from "./FixedTransactions/FixedTransactionsPage";
 import { Typography } from "@mui/material";
 import SavingsManagementPage from "./SavingsManagement/SavingsManagementPage";
+import SettingsPage from "./Settings/SettingsPage";
 
 
 const MyMainPage = () => {
@@ -26,6 +27,7 @@ const MyMainPage = () => {
                     <Route path="/fixed-incomes" element={<FixedTransactionsPage incomes />} />
                     <Route path="/fixed-expenses" element={<FixedTransactionsPage expenses />} />
                     <Route path="/savings-managment" element={<SavingsManagementPage />} />
+                    <Route path="/settings" element={<SettingsPage />} />
                 </Route>
             </Routes>
         </>
