@@ -61,6 +61,8 @@ const MyModal = () => {
         return <UpdatePassword />;
       case SET_MINIMUM_SAVINGS:
         return <SetMinimumSavings />;
+      // case ADD_TRANS_CATEGORY:
+      //   return<AddTransactionCategory />;
       default:
         return <></>;
     }

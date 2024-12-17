@@ -12,7 +12,7 @@ const NavList = () => {
     const location = useLocation();
 
     const ManageAccountSub = [
-        'Fixed Income',
+        'Fixed Incomes',
         'Fixed Expenses',
         'Savings Managment',
         'Debt/Credit Tracking',
