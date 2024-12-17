@@ -7,11 +7,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Istore } from '../../redux/store';
 import { hideModal } from '../../redux/action/modal';
 import { ImodalState } from '../../interfaces/ImodalState';
-import { ADD_NEW_FIXED_TRANSACTION, ADD_NEW_VAR_TRANSACTION, DELETE_FIXED_TRANSACTION_BUTTONS, DELETE_TRANSACTION_BUTTONS, UPDATE_FIXED_TRANSACTION_FORM, UPDATE_VARIABLE_TRANSACTION_FORM } from '../../modules/ModalContents';
+import { ADD_NEW_FIXED_TRANSACTION, ADD_NEW_VAR_TRANSACTION, CHANGE_PASSWORD, DELETE_FIXED_TRANSACTION_BUTTONS, DELETE_TRANSACTION_BUTTONS, SET_MINIMUM_SAVINGS, UPDATE_FIXED_TRANSACTION_FORM, UPDATE_USER_DATA, UPDATE_VARIABLE_TRANSACTION_FORM } from '../../modules/ModalContents';
 import DeleteTransactionModalButtons from '../ModalComponents/DeleteTransactionModalButtons';
 import VariableTransactionForm from '../ModalComponents/VariableTransactionForm';
 import FixedTransactionForm from '../ModalComponents/FixedTransactionForm';
 import DeleteFixedTransactionModalButtons from '../ModalComponents/DeleteFixedTransactionModalButtons';
+import UpdateUserData from '../ModalComponents/UpdateUserData';
+import UpdatePassword from '../ModalComponents/UpdatePassword';
+import SetMinimumSavings from '../ModalComponents/SetMinimumSavings';
 
 const style = {
   position: 'absolute',
@@ -52,6 +55,14 @@ const MyModal = () => {
         return <DeleteFixedTransactionModalButtons />;
       case UPDATE_FIXED_TRANSACTION_FORM:
         return <FixedTransactionForm isUpdate />;
+      case UPDATE_USER_DATA:
+        return <UpdateUserData />;
+      case CHANGE_PASSWORD:
+        return <UpdatePassword />;
+      case SET_MINIMUM_SAVINGS:
+        return <SetMinimumSavings />;
+      // case ADD_TRANS_CATEGORY:
+      //   return<AddTransactionCategory />;
       default:
         return <></>;
     }
